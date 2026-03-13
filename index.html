@@ -9,14 +9,14 @@
   <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
   <style>
     :root{
-      --bg:#0f172a; /* slate-900 */
-      --card:#111827; /* gray-900 */
-      --muted:#94a3b8; /* slate-400 */
-      --text:#e5e7eb; /* gray-200 */
-      --accent:#22d3ee; /* cyan-400 */
+      --bg:#0f172a;
+      --card:#111827;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --accent:#22d3ee;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; min-height:100vh}
+    html,body{height:100%}
     body{
       margin:0; background:linear-gradient(180deg,#0b1220,#0f172a 30%,#0b1220);
       color:var(--text); font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, sans-serif;
@@ -25,112 +25,51 @@
     .app{width:min(1100px,100%);}
     .card{background:var(--card); border:1px solid #1f2937; border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35)}
     h1{font-size:22px; margin:0 0 4px; letter-spacing:.2px}
-    .sub{color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6}
+    .sub{color:var(--muted); margin-bottom:16px}
 
     .row{display:grid; grid-template-columns: 1.1fr .9fr; gap:16px}
     .col{display:flex; flex-direction:column; gap:10px}
-    
-    /* 반응형 디자인 */
     @media (max-width: 768px){
       .row{grid-template-columns: 1fr}
-      textarea{min-height:200px !important}
-      body{padding:12px}
+      textarea{min-height:200px}
+      .app{padding:0}
       .card{border-radius:12px; padding:16px}
-      h1{font-size:20px}
-      .sub{font-size:13px}
     }
 
-    textarea{
-      width:100%; min-height:280px; resize:vertical; 
-      background:#0b1020; color:var(--text); 
-      border:1px solid #263041; border-radius:12px; padding:12px; 
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace;
-      font-size:13px; line-height:1.5;
-      transition:.2s border-color;
-    }
+    textarea{width:100%; min-height:280px; resize:vertical; background:#0b1020; color:var(--text); border:1px solid #263041; border-radius:12px; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace}
 
     .drop{
-      border:2px dashed #334155; border-radius:12px; padding:18px; 
-      text-align:center; color:var(--muted);
+      border:2px dashed #334155; border-radius:12px; padding:18px; text-align:center; color:var(--muted);
       transition:.2s border-color,.2s background;
-      cursor:pointer;
     }
-    .drop:hover{border-color:#475569}
     .drop.drag{border-color:var(--accent); background:#06222a}
-    .drop:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 
     .controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
-    label{font-size:14px; color:var(--muted); display:flex; flex-direction:column; gap:4px}
+    label{font-size:14px; color:var(--muted)}
     input[type="text"], select{
-      background:#0b1020; color:var(--text); 
-      border:1px solid #263041; border-radius:10px; 
-      padding:8px 10px; font-size:14px;
-      transition:.2s border-color;
+      background:#0b1020; color:var(--text); border:1px solid #263041; border-radius:10px; padding:8px 10px; font-size:14px
     }
-    
     .buttons{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
-    button{
-      appearance:none; border:1px solid #1f2c3f; 
-      background:#0f172a; color:var(--text); 
-      padding:10px 14px; border-radius:12px; 
-      cursor:pointer; font-weight:600; font-size:14px;
-      transition:.2s transform,.2s background,.2s border-color;
-      display:inline-flex; align-items:center; justify-content:center;
+    button{appearance:none; border:1px solid #1f2c3f; background:#0f172a; color:var(--text); padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+      transition:.2s transform,.2s background,.2s border-color
     }
     button.primary{background:var(--accent); color:#00151a; border-color:#0891b2}
-    button:hover:not(:disabled){transform:translateY(-1px); background:#1e293b}
-    button.primary:hover:not(:disabled){background:#06b6d4}
+    button:hover:not(:disabled){transform:translateY(-1px)}
     button:disabled{opacity:.5; cursor:not-allowed}
     button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-    textarea:focus-visible, input:focus-visible, select:focus-visible{
-      outline:2px solid var(--accent); outline-offset:2px; border-color:var(--accent)
-    }
-    
-    /* 로딩 애니메이션 */
-    .loader{
-      display:inline-block; width:14px; height:14px; 
-      border:2px solid #334155; border-top-color:var(--accent); 
-      border-radius:50%; animation:spin .6s linear infinite; margin-left:6px
-    }
+    textarea:focus-visible, input:focus-visible, select:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+    .hint{font-size:12px; color:#7a8aa8}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace}
+    .footer{margin-top:14px; font-size:12px; color:#7a8aa8}
+    .pill{display:inline-block; padding:2px 8px; border:1px solid #2a3a55; border-radius:999px; margin-left:6px; font-size:11px; color:#9bb1d6}
+    .loader{display:inline-block; width:14px; height:14px; border:2px solid #334155; border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; margin-left:6px}
     @keyframes spin{to{transform:rotate(360deg)}}
-    
-    /* 토스트 알림 */
-    .toast{
-      position:fixed; bottom:24px; right:24px; 
-      background:#1f2937; border:1px solid #374151; 
-      border-radius:12px; padding:12px 16px; 
-      color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,.5); 
-      animation:slideIn .3s ease; z-index:1000;
-      max-width:320px;
-    }
+    .toast{position:fixed; bottom:24px; right:24px; background:#1f2937; border:1px solid #374151; border-radius:12px; padding:12px 16px; color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,.5); animation:slideIn .3s ease; z-index:1000}
     .toast.success{border-left:3px solid #10b981}
     .toast.error{border-left:3px solid #ef4444}
     @keyframes slideIn{from{transform:translateX(400px); opacity:0} to{transform:translateX(0); opacity:1}}
-    
-    /* 파일 정보 */
-    .file-info{
-      font-size:12px; color:#60a5fa; 
-      margin-top:8px; padding:8px 12px;
-      background:#0c1a2a; border-radius:8px;
-      display:none;
-    }
+    .file-info{font-size:12px; color:#60a5fa; margin-top:8px; display:none}
     .file-info.show{display:block}
-    
-    .hint{font-size:12px; color:#7a8aa8; line-height:1.5}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace}
-    .footer{margin-top:14px; font-size:12px; color:#7a8aa8; line-height:1.5}
-    .pill{
-      display:inline-block; padding:2px 8px; 
-      border:1px solid #2a3a55; border-radius:999px; 
-      margin-left:6px; font-size:11px; color:#9bb1d6
-    }
-    
-    /* 스크린 리더 전용 */
-    .sr-only{
-      position:absolute; width:1px; height:1px; 
-      padding:0; margin:-1px; overflow:hidden; 
-      clip:rect(0,0,0,0); white-space:nowrap; border:0
-    }
   </style>
 </head>
 <body>
@@ -141,23 +80,16 @@
 
       <div class="row">
         <div class="col">
-          <div id="drop" class="drop" role="button" tabindex="0" aria-label="파일 드롭 영역. Enter 또는 스페이스를 눌러 파일 선택">
-            여기에 <b>.txt</b> 또는 <b>.docx</b> 파일을 드롭하세요<br>
-            또는 아래 입력칸에 직접 붙여넣기<br>
-            <small style="color:#7a8aa8; font-size:11px">(최대 10MB)</small>
-          </div>
+          <div id="drop" class="drop" role="button" tabindex="0" aria-label="파일 드롭 영역">여기에 <b>.txt</b> 또는 <b>.docx</b> 파일을 드롭하세요<br>또는 아래 입력칸에 직접 붙여넣기<br><small style="color:#7a8aa8; font-size:11px">(최대 10MB)</small></div>
           <div id="fileInfo" class="file-info"></div>
-          
           <label for="input" class="sr-only">입력 텍스트</label>
           <textarea id="input" aria-label="입력 텍스트 영역" placeholder="예)안녕하세요 저는 손명균입니다.
 아 네 안녕하세요.
           
 저의 과는 기계공학과입니다.
 아 그렇군요."></textarea>
-          
           <div class="controls">
-            <label for="separator">
-              블록 구분자
+            <label for="separator">블록 구분자
               <select id="separator" aria-label="블록 구분자 선택">
                 <option value="LRM">LRM (U+200E · 기본)</option>
                 <option value="ZWSP">ZWSP (U+200B)</option>
@@ -165,111 +97,44 @@
               </select>
             </label>
             <input id="customSep" type="text" placeholder="직접 문자 입력 (예: · 또는 ◦)" aria-label="사용자 지정 구분자" style="display:none" />
-            <label for="prefix">
-              번호 접두사
+            <label for="prefix">번호 접두사
               <input id="prefix" type="text" value="#" aria-label="번호 접두사" />
             </label>
-            <label for="startIdx">
-              숫자 시작값
+            <label for="startIdx">숫자 시작값
               <input id="startIdx" type="text" value="1" size="4" aria-label="시작 번호" />
             </label>
           </div>
-          
           <div class="buttons">
             <button class="primary" id="formatBtn" aria-label="포맷 실행">실행하기</button>
             <button id="copyBtn" aria-label="결과 복사">클립보드 복사</button>
             <button id="downloadBtn" aria-label="파일 다운로드">TXT로 다운로드</button>
             <button id="clearBtn" aria-label="입력 초기화">초기화</button>
           </div>
-          
-          <div class="hint">
-            ※ 개인정보 보호: 모든 처리는 <b>브라우저 안에서만</b> 이루어집니다. 서버로 업로드되지 않습니다.
-          </div>
+          <div class="hint">※ 개인정보 보호: 모든 처리는 <b>브라우저 안에서만</b> 이루어집니다. 서버로 업로드되지 않습니다.</div>
         </div>
-        
         <div class="col">
           <label for="output">결과</label>
           <textarea id="output" aria-label="포맷된 결과" placeholder="여기에 결과가 표시됩니다" readonly></textarea>
         </div>
       </div>
 
-      <div class="footer">
-        <b>Tip:</b> Word(.docx)는 내부 텍스트만 추출합니다. 줄 나눔이 이상하면 Word에서 먼저 줄바꿈 정리 후 다시 시도하세요.
-      </div>
+      <div class="footer">Tip: Word(.docx)는 내부 텍스트만 추출합니다. 줄 나눔이 이상하면 Word에서 먼저 줄바꿈 정리 후 다시 시도하세요.</div>
     </div>
   </div>
 
 <script>
-  // --- Constants ---
-  const SEP_MAP = {
-    LRM: "\u200E", // Left-to-Right Mark
-    ZWSP: "\u200B"  // Zero Width Space
-  };
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-  let formatDebounceTimer = null;
-
-  // --- UI Helpers ---
-  function showToast(message, type = 'success') {
-    // 기존 토스트 제거
-    const existing = document.querySelector('.toast');
-    if (existing) existing.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    toast.setAttribute('role', 'alert');
-    toast.setAttribute('aria-live', 'polite');
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 3000);
-  }
-
-  function setLoading(btn, loading) {
-    if (loading) {
-      btn.disabled = true;
-      const loader = document.createElement('span');
-      loader.className = 'loader';
-      loader.setAttribute('aria-label', '로딩 중');
-      btn.appendChild(loader);
-    } else {
-      btn.disabled = false;
-      const loader = btn.querySelector('.loader');
-      if (loader) loader.remove();
-    }
-  }
-
-  function showFileInfo(fileName, fileSize) {
-    const info = document.getElementById('fileInfo');
-    info.textContent = `📄 ${fileName} (${(fileSize / 1024).toFixed(1)} KB)`;
-    info.classList.add('show');
-  }
-
-  function validateFile(file) {
-    if (file.size > MAX_FILE_SIZE) {
-      throw new Error(`파일 크기가 너무 큽니다. (최대 ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
-    }
-    const name = file.name.toLowerCase();
-    if (!name.endsWith('.txt') && !name.endsWith('.docx')) {
-      throw new Error('지원하지 않는 파일 형식입니다. (.txt, .docx만 가능)');
-    }
-    return true;
-  }
-
   // --- Utilities ---
+  const SEP_MAP = {
+    LRM: "\u200E",
+    ZWSP: "\u200B"
+  };
+
   function normalizeText(raw){
     if(!raw) return "";
     let t = raw.replace(/\r\n?/g, "\n");
     t = t.replace(/[""]/g,'"').replace(/['']/g,"'");
     t = t.replace(/\t/g, "    ");
     return t.trim();
-  }
-
-  function splitParagraphs(text){
-    const blocks = text.split(/\n\s*\n+/).map(b=>b.trim()).filter(Boolean);
-    return blocks.length > 1 ? blocks : null;
-  }
-
-  function splitLines(text){
-    return text.split(/\n+/).map(l=>l.trim()).filter(Boolean);
   }
 
   function formatLines(items, {prefix="#", start=1, sepChar="\u200E"}){
@@ -305,36 +170,21 @@
   }
 
   function doFormat(){
-    try {
-      const prefix = document.querySelector('#prefix').value || '#';
-      const start = getStartIndex();
-      const sepChar = chooseSeparator();
-      const raw = document.querySelector('#input').value;
-      
-      if (!raw.trim()) {
-        showToast('입력할 텍스트가 없습니다.', 'error');
-        return;
-      }
+    const prefix = document.querySelector('#prefix').value || '#';
+    const start = getStartIndex();
+    const sepChar = chooseSeparator();
+    const raw = document.querySelector('#input').value;
+    const text = normalizeText(raw);
 
-      const text = normalizeText(raw);
-      const paras = splitParagraphs(text);
-      const items = paras
-        ? paras.map(p => p.split(/\n+/).map(s => s.trim()).filter(Boolean))
-        : splitLines(text).map(s => [s]);
+    // 빈 줄(한 줄 이상)로만 블록 구분 — 한 번 줄바꿈은 같은 블록 내 여러 줄로 처리
+    const items = text
+      .split(/\n[ \t]*\n+/)
+      .map(p => p.split(/\n/).map(s => s.trim()).filter(Boolean))
+      .filter(arr => arr.length > 0);
 
-      const result = formatLines(items, {prefix, start, sepChar});
-      document.querySelector('#output').value = result;
-      showToast('포맷 완료!', 'success');
-      return result;
-    } catch (error) {
-      console.error('Format error:', error);
-      showToast('포맷 중 오류가 발생했습니다: ' + error.message, 'error');
-    }
-  }
-
-  function debouncedFormat() {
-    clearTimeout(formatDebounceTimer);
-    formatDebounceTimer = setTimeout(doFormat, 300);
+    const result = formatLines(items, {prefix, start, sepChar});
+    document.querySelector('#output').value = result;
+    return result;
   }
 
   // --- Drag & Drop ---
@@ -342,130 +192,56 @@
   const inputTA = document.getElementById('input');
 
   function setDrag(on){ drop.classList.toggle('drag', !!on); }
-  
-  ['dragenter','dragover'].forEach(evt => {
-    drop.addEventListener(evt, e => {
-      e.preventDefault(); 
-      setDrag(true);
-    });
-  });
-  
-  ['dragleave','drop'].forEach(evt => {
-    drop.addEventListener(evt, e => {
-      e.preventDefault(); 
-      setDrag(false);
-    });
-  });
+  ;['dragenter','dragover'].forEach(evt=>drop.addEventListener(evt, e=>{e.preventDefault(); setDrag(true);}));
+  ;['dragleave','drop'].forEach(evt=>drop.addEventListener(evt, e=>{e.preventDefault(); setDrag(false);}));
 
-  drop.addEventListener('drop', async (e) => {
-    const formatBtn = document.getElementById('formatBtn');
-    try {
-      const file = e.dataTransfer.files?.[0];
-      if(!file) return;
-      
-      validateFile(file);
-      setLoading(formatBtn, true);
-      showFileInfo(file.name, file.size);
-      
-      const name = file.name.toLowerCase();
+  drop.addEventListener('drop', async (e)=>{
+    const file = e.dataTransfer.files?.[0];
+    if(!file) return;
+    const name = file.name.toLowerCase();
 
-      if(name.endsWith('.txt')){
-        const text = await file.text();
-        inputTA.value = text;
-        doFormat();
-      } else if(name.endsWith('.docx')){
-        const arrayBuffer = await file.arrayBuffer();
-        const {value} = await window.mammoth.extractRawText({arrayBuffer});
-        inputTA.value = value;
-        doFormat();
-      }
-    } catch(error) {
-      console.error('File drop error:', error);
-      showToast(error.message, 'error');
-    } finally {
-      setLoading(formatBtn, false);
+    if(name.endsWith('.txt')){
+      const text = await file.text();
+      inputTA.value = text; doFormat();
+    } else if(name.endsWith('.docx')){
+      const arrayBuffer = await file.arrayBuffer();
+      const {value} = await window.mammoth.extractRawText({arrayBuffer});
+      inputTA.value = value; doFormat();
+    } else {
+      alert('지원 형식: .txt, .docx');
     }
   });
 
-  // 키보드 접근성 - 파일 선택
-  drop.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.txt,.docx';
-      input.onchange = async (event) => {
-        const file = event.target.files?.[0];
-        if (file) {
-          const dt = new DataTransfer();
-          dt.items.add(file);
-          const dropEvent = new DragEvent('drop', { dataTransfer: dt });
-          drop.dispatchEvent(dropEvent);
-        }
-      };
-      input.click();
-    }
-  });
+  // --- 실시간 업데이트 ---
+  inputTA.addEventListener('input', doFormat);
 
   // --- Controls ---
   document.getElementById('formatBtn').addEventListener('click', doFormat);
-  
-  // 입력 시 자동 포맷 (디바운싱)
-  inputTA.addEventListener('input', () => {
-    const output = document.querySelector('#output');
-    if (inputTA.value.trim() && output.value) {
-      debouncedFormat();
-    }
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    document.querySelector('#input').value='';
+    document.querySelector('#output').value='';
   });
 
-  document.getElementById('clearBtn').addEventListener('click', () => {
-    document.querySelector('#input').value = '';
-    document.querySelector('#output').value = '';
-    document.getElementById('fileInfo').classList.remove('show');
-    showToast('초기화되었습니다.', 'success');
-  });
-
-  document.getElementById('copyBtn').addEventListener('click', async () => {
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{
     const val = document.querySelector('#output').value;
-    if(!val){ 
-      showToast('먼저 포맷을 실행하세요.', 'error'); 
-      return; 
-    }
-    try {
-      await navigator.clipboard.writeText(val);
-      showToast('클립보드에 복사되었습니다!', 'success');
-    } catch(error) {
-      console.error('Copy error:', error);
-      showToast('복사 실패. 수동으로 복사해주세요.', 'error');
-    }
+    if(!val){ alert('먼저 포맷을 실행하세요.'); return; }
+    try { await navigator.clipboard.writeText(val); alert('복사되었습니다!'); }
+    catch{ alert('복사 실패… 수동으로 복사해주세요.'); }
   });
 
-  document.getElementById('downloadBtn').addEventListener('click', () => {
+  document.getElementById('downloadBtn').addEventListener('click', ()=>{
     const val = document.querySelector('#output').value;
-    if(!val){ 
-      showToast('먼저 포맷을 실행하세요.', 'error'); 
-      return; 
-    }
-    try {
-      const blob = new Blob([val], {type:'text/plain;charset=UTF-8'});
-      const a = document.createElement('a');
-      const timestamp = new Date().toISOString().slice(0,19).replace(/:/g,'-');
-      a.href = URL.createObjectURL(blob);
-      a.download = `interview_formatted_${timestamp}.txt`;
-      document.body.appendChild(a); 
-      a.click(); 
-      a.remove();
-      URL.revokeObjectURL(a.href);
-      showToast('파일이 다운로드되었습니다!', 'success');
-    } catch(error) {
-      console.error('Download error:', error);
-      showToast('다운로드 실패', 'error');
-    }
+    if(!val){ alert('먼저 포맷을 실행하세요.'); return; }
+    const blob = new Blob([val], {type:'text/plain;charset=UTF-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'interview_formatted.txt';
+    document.body.appendChild(a); a.click(); a.remove();
   });
 
-  document.getElementById('separator').addEventListener('change', (e) => {
+  document.getElementById('separator').addEventListener('change', (e)=>{
     const custom = document.getElementById('customSep');
-    custom.style.display = e.target.value === 'CUSTOM' ? 'inline-block' : 'none';
+    custom.style.display = e.target.value==='CUSTOM' ? 'inline-block' : 'none';
   });
 </script>
 </body>
